@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -58,11 +60,20 @@ namespace Shop.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Password,Name,Address,Phone,Email,Catid")] Account account)
+        public async Task<IActionResult> Create([Bind("Id,Username,Password,Name,Image,Address,Phone,Email,Catid")] Account account,IFormFile ful)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(account);
+                await _context.SaveChangesAsync();
+                var path = Path.Combine(
+                    Directory.GetCurrentDirectory(), "wwwroot/images/account", account.Id + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1]);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await ful.CopyToAsync(stream);
+                }
+                account.Image = account.Id + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                _context.Update(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -92,7 +103,7 @@ namespace Shop.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Password,Name,Address,Phone,Email,Catid")] Account account)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Password,Name,Image,Address,Phone,Email,Catid")] Account account)
         {
             if (id != account.Id)
             {

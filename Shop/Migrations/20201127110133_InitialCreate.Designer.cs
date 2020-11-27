@@ -9,7 +9,7 @@ using Shop.Areas.Admin.Data;
 namespace Shop.Migrations
 {
     [DbContext(typeof(DPContext))]
-    [Migration("20201127075801_InitialCreate")]
+    [Migration("20201127110133_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace Shop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -66,6 +69,9 @@ namespace Shop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

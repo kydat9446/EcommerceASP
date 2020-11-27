@@ -11,13 +11,21 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <label asp-for="Image" class="control-label"></label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="ful" name="ful">
+                <label class="custom-file-label" for="ful">Choose File</label>
+            </div>
+            <div class="form-group">
+                <img id="Image" src="~/images/product/@Model.Image" class="img-thumbnail">
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -52,4 +60,19 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    function readURL(input, img) {
+        if (input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#ful").change(function () {
+        readURL(this,'#img');
+    })
+    </script>
 }
+

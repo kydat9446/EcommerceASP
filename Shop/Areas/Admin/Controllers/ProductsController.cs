@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Shop.Areas.Admin.Data;
 using Shop.Areas.Admin.Models;
 
@@ -58,11 +61,20 @@ namespace Shop.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Status,Catid")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Image,Price,Description,Status,Catid")] Product product, IFormFile ful)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(product);
+                await _context.SaveChangesAsync();
+                var path = Path.Combine(
+                    Directory.GetCurrentDirectory(), "wwwroot/images/product", product.Id + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1]);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await ful.CopyToAsync(stream);
+                }
+                product.Image = product.Id + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                _context.Update(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -77,7 +89,6 @@ namespace Shop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
             var product = await _context.product.FindAsync(id);
             if (product == null)
             {
@@ -92,19 +103,34 @@ namespace Shop.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Description,Status,Catid")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image,Price,Description,Status,Catid")] Product product, IFormFile ful)
         {
             if (id != product.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    if (ful != null)
+                    {
+                        string t = product.Id + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/product", product.Image);
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/product", t);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await ful.CopyToAsync(stream);
+                        }
+                        product.Image = t;
+                        _context.Update(product);
+                        await _context.SaveChangesAsync();
+
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

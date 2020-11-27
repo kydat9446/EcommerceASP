@@ -49,7 +49,7 @@ namespace Shop
             {
                 endpoints.MapControllerRoute(
                     name: "Admin",
-                    pattern: "{area:exists}/{controller=Accounts}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Products}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=index}/{id?}");
