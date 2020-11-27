@@ -16,6 +16,6 @@ namespace Shop.Areas.Admin.Models
         public string Status { get; set; }
         public int Catid { get; set; }
         [ForeignKey("Catid")]
-        public TypeProduct TypeP { get; set; }
+        public virtual TypeProduct TypeP { get; set; }
     } 
 }

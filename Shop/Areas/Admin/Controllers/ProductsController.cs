@@ -131,6 +131,11 @@ namespace Shop.Areas.Admin.Controllers
                         await _context.SaveChangesAsync();
 
                     }
+                    else
+                    {
+                        _context.Update(product);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

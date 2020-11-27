@@ -48,7 +48,7 @@ namespace Shop
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "Admin",
+                    name: "default",
                     pattern: "{area:exists}/{controller=Products}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
