@@ -13,7 +13,7 @@
                 </div>
                 <div class="w3layouts_mail_grid_left2">
                     <h3>FREE SHIPPING</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    <p>Wherever you are, we can deliver it as soon as possible </p>
                 </div>
             </div>
             <div class="col-md-3 w3layouts_mail_grid_left">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="w3layouts_mail_grid_left2">
                     <h3>24/7 SUPPORT</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    <p>Our customer support center is alway available 24/7</p>
                 </div>
             </div>
             <div class="col-md-3 w3layouts_mail_grid_left">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="w3layouts_mail_grid_left2">
                     <h3>MONEY BACK GUARANTEE</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    <p>Alway make the customer happy</p>
                 </div>
             </div>
             <div class="col-md-3 w3layouts_mail_grid_left">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="w3layouts_mail_grid_left2">
                     <h3>FREE GIFT COUPONS</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    <p>Event every season with discount up 75%</p>
                 </div>
             </div>
             <div class="clearfix"> </div>
@@ -49,52 +49,39 @@
     </div>
 </div>
 <!--grids-->
+<script>
+    //$('.counter').countUp();
+    $('.counter').each(function () {
+        $(this).prop('Counter', 0).animate({
+            Counter: $(this).text()
+        }, {
+            duration: 4000,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            }
+        });
+    });
+</script>
 <!-- footer -->
 <div class="footer">
     <div class="footer_agile_inner_info_w3l">
         <div class="col-md-3 footer-left">
-            <h2><a asp-controller="Home" asp-action="Index" ><span>E</span>lite Shoppy </a></h2>
+            <h2><a asp-controller="Home" asp-action="index"><span>E</span>lite Shoppy </a></h2>
             <p>
-                Lorem ipsum quia dolor
-                sit amet, consectetur, adipisci velit, sed quia non
-                numquam eius modi tempora.
-            </p>
-            <ul class="social-nav model-3d-0 footer-social w3_agile_social two">
-                <li>
-                    <a href="#" class="facebook">
-                        <div class="front"><i class="fa fa-facebook" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-facebook" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="twitter">
-                        <div class="front"><i class="fa fa-twitter" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-twitter" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="instagram">
-                        <div class="front"><i class="fa fa-instagram" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-instagram" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="pinterest">
-                        <div class="front"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-            </ul>
+                To be fashionable, modern and gorgeous
+                Make people to look at you.
+            </p>            
         </div>
         <div class="col-md-9 footer-right">
             <div class="sign-grds">
                 <div class="col-md-4 sign-gd">
                     <h4>Our <span>Information</span> </h4>
                     <ul>
-                        <li><a asp-controller="Home" asp-action="Index" >Home</a></li>
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Home" asp-action="Men">Men's Wear</a></li>
                         <li><a asp-controller="Home" asp-action="Women">Women's wear</a></li>
-                        <li><a asp-controller="Home" asp-action="About">About</a></li>                        
+                        <li><a asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
                     </ul>
                 </div>
@@ -154,8 +141,8 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-        <div class="clearfix"></div>        
-        <p class="copy-right">&copy Elite shoppy. All rights reserved | Design by Phan Du's Team</a></p>
+        <div class="clearfix"></div>
+        <p class="copy-right">&copy Elite shoppy. All rights reserved | Design by Phan Du's team</p>
     </div>
 </div>
 <!-- //footer -->
@@ -222,14 +209,31 @@
     </div>
 </div>
 <!-- //login -->
-@*<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>*@
+<!--<a href="#home" class="scroll" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>-->
+<!--<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>-->
 <!-- js -->
+<script>
+    //Get the button:
+    mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    
+
+ 
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>
 <script type="text/javascript" src="~/js/jquery-2.1.4.min.js"></script>
 <!-- //js -->
 <script src="~/js/modernizr.custom.js"></script>
 <!-- Custom-JavaScript-File-Links -->
 <!-- cart-js -->
 <script src="~/js/minicart.min.js"></script>
+
 <script>
     // Mini Cart
     paypal.minicart.render({
@@ -242,94 +246,6 @@
 </script>
 
 <!-- //cart-js -->
-<!-- script for responsive tabs -->
-<script src="~/js/easy-responsive-tabs.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#hori1ntalTab').easyResponsiveTabs({
-            type: 'default', //Types: default, vertical, accordion
-            width: 'auto', //auto or any width like 600px
-            fit: true,   // 100% fit in a container
-            closed: 'accordion', // Start closed if in accordion view
-            activate: function (event) { // Callback function if tab is switched
-                var $tab = $(this);
-                var $info = $('#tabInfo');
-                var $name = $('span', $info);
-                $name.text($tab.text());
-                $info.show();
-            }
-        });
-        $('#verticalTab').easyResponsiveTabs({
-            type: 'vertical',
-            width: 'auto',
-            fit: true
-        });
-    });
-</script>
-<!-- //script for responsive tabs -->
-<!-- stats -->
-<script src="~/js/jquery.waypoints.min.js"></script>
-<!--<script src="~/js/jquery.countup.js"></script>-->
-<script>
-    //$('.counter').countUp();
-    $('.counter').each(function () {
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 4000,
-            easing: 'swing',
-            step: function (now) {
-                $(this).text(Math.ceil(now));
-            }
-        });
-    });
-</script>
-<!-- //stats -->
-<!-- start-smoth-scrolling -->
-<script type="text/javascript" src="~/js/move-top.js"></script>
-<script type="text/javascript" src="~/js/jquery.easing.min.js"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $(".scroll").click(function (event) {
-            event.preventDefault();
-            $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
-        });
-    });
-</script>
-
-
-
-<!-- start-smoth-scrolling -->
-<script type="text/javascript" src="~/js/move-top.js"></script>
-<script type="text/javascript" src="~/js/jquery.easing.min.js"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $(".scroll").click(function (event) {
-            event.preventDefault();
-            $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
-        });
-    });
-</script>
-<!-- here stars scrolling icon -->
-<script type="text/javascript">
-    $(document).ready(function () {
-        /*
-            var defaults = {
-            containerID: 'toTop', // fading element id
-            containerHoverID: 'toTopHover', // fading element hover id
-            scrollSpeed: 1200,
-            easingType: 'linear'
-            };
-        */
-
-        $().UItoTop({ easingType: 'easeOutQuart' });
-
-    });
-</script>
-<!-- //here ends scrolling icon -->
-<!-- single -->
-<script src="~/js/imagezoom.js"></script>
-<!-- single -->
 <!-- script for responsive tabs -->
 <script src="~/js/easy-responsive-tabs.js"></script>
 <script>
@@ -354,19 +270,12 @@
         });
     });
 </script>
-<!-- FlexSlider -->
-@*<script src="~/js/jquery.flexslider.js"></script>
-    <script>
-        // Can also be used with $(document).ready()
-        $(window).load(function () {
-            flexslider({
-                animation: "slide",
-                controlNav: "thumbnails"
-            });
-        });
-    </script>*@
-<!-- //FlexSlider-->
 <!-- //script for responsive tabs -->
+<!-- stats -->
+<script src="~/js/jquery.waypoints.min.js"></script>
+
+
+<!-- //stats -->
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="~/js/move-top.js"></script>
 <script type="text/javascript" src="~/js/jquery.easing.min.js"></script>
@@ -395,26 +304,8 @@
     });
 </script>
 <!-- //here ends scrolling icon -->
-<script src="~/js/responsiveslides.min.js"></script>
-<script>
-    // You can also use "$(window).load(function() {"
-    $(function () {
-        // Slideshow 4
-        $("#slider3").responsiveSlides({
-            auto: true,
-            pager: true,
-            nav: false,
-            speed: 500,
-            namespace: "callbacks",
-            before: function () {
-                $('.events').append("<li>before event fired.</li>");
-            },
-            after: function () {
-                $('.events').append("<li>after event fired.</li>");
-            }
-        });
-    });
-</script>
+<!-- for bootstrap working -->
+<script type="text/javascript" src="~/js/bootstrap.js"></script>
 <script>
     var slideIndex = 1;
     showSlides(slideIndex);
