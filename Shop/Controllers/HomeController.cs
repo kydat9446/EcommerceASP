@@ -18,6 +18,29 @@ namespace Shop.Controllers
         {
             ViewBag.Categories = _context.typeProduct;
             ViewBag.Products = _context.product;
+            var tShirts = (from products in _context.product
+                           where products.Catid==9
+                           select products
+                           ).ToList();
+            ViewBag.TShirt = tShirts;
+
+            var trousers= (from products in _context.product
+                           where products.Catid == 10
+                           select products
+                           ).ToList();
+            ViewBag.Trousers = trousers;
+
+            var accessories= (from products in _context.product
+                              where products.Catid == 12
+                              select products
+                           ).ToList();
+            ViewBag.Accessories = accessories;
+
+            var socks= (from products in _context.product
+                        where products.Catid == 11
+                        select products
+                           ).ToList();
+            ViewBag.Socks = socks;
             return View();
         }
         public IActionResult About()
