@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Areas.Admin.Data;
-
+using Shop.Areas.Admin.Models;
 namespace Shop.Controllers
 {
     public class HomeController : Controller
@@ -20,26 +20,30 @@ namespace Shop.Controllers
             ViewBag.Products = _context.product;
             var tShirts = (from products in _context.product
                            where products.Catid==9
-                           select products
-                           ).ToList();
+                           orderby products.Id descending
+                           select  products
+                           ).Take(4).ToList();
             ViewBag.TShirt = tShirts;
 
             var trousers= (from products in _context.product
                            where products.Catid == 10
+                           orderby products.Id descending
                            select products
-                           ).ToList();
+                           ).Take(4).ToList();
             ViewBag.Trousers = trousers;
 
             var accessories= (from products in _context.product
                               where products.Catid == 12
+                              orderby products.Id descending
                               select products
-                           ).ToList();
+                           ).Take(4).ToList();
             ViewBag.Accessories = accessories;
 
             var socks= (from products in _context.product
                         where products.Catid == 11
+                        orderby products.Id descending
                         select products
-                           ).ToList();
+                           ).Take(4).ToList();
             ViewBag.Socks = socks;
             return View();
         }
@@ -63,6 +67,18 @@ namespace Shop.Controllers
         {
             var product = _context.product.Where(item => item.Id == Id).ToList();
             ViewBag.Product = product;
+
+            var sameProducts = (from p in product
+                                join c in _context.product on p.Catid equals c.Catid
+                                orderby c.Id descending
+                                select c
+                                ).Take(4).ToList();
+            ViewBag.SameProducts = sameProducts;
+            var productsNew = (from p in _context.product
+                               orderby p.Id descending
+                               select p
+                             ).Take(8).ToList();
+            ViewBag.NewProducts = productsNew;
             return View();
         }
     }
