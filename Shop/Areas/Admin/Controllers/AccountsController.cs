@@ -23,10 +23,28 @@ namespace Shop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Accounts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string listTypeProduct,string searchString)
         {
-            var dPContext = _context.account.Include(a => a.TypeA);
-            return View(await dPContext.ToListAsync());
+            IQueryable<string> ListTypeAccountQuery = from m in _context.account
+                                                    orderby m.TypeA.Name
+                                                    select m.TypeA.Name;
+            var account = from m in _context.account
+                          select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                account = account.Where(s => s.Name.Contains(searchString));
+            }
+            if (!string.IsNullOrEmpty(listTypeProduct))
+            {
+                account = account.Where(x => x.Name == listTypeProduct);
+            }
+            var listTypeAccountVM = new SearchAccount
+            {
+                ListAccount = new SelectList(await ListTypeAccountQuery.Distinct().ToListAsync()),
+                Accounts = await account.ToListAsync()
+            };
+            var dPContext = _context.account.Include(s => s.TypeA.Id);
+            return View(listTypeAccountVM);
         }
 
         // GET: Admin/Accounts/Details/5
@@ -66,7 +84,7 @@ namespace Shop.Areas.Admin.Controllers
             {
                 _context.Add(account);
                 await _context.SaveChangesAsync();
-                var path = Path.Combine(
+                var path = Path.Combine(    
                     Directory.GetCurrentDirectory(), "wwwroot/images/account", account.Id + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1]);
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
@@ -103,19 +121,38 @@ namespace Shop.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Password,Name,Image,Address,Phone,Email,Catid")] Account account)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Password,Name,Image,Address,Phone,Email,Catid")] Account account, IFormFile ful)
         {
             if (id != account.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(account);
-                    await _context.SaveChangesAsync();
+                    if (ful != null)
+                    {
+                        string t = account.Id + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/account", account.Image);
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/account", t);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await ful.CopyToAsync(stream);
+                        }
+                        account.Image = t;
+                        _context.Update(account);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        _context.Update(account);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -130,6 +167,31 @@ namespace Shop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            //if (id != account.Id)
+            //{
+            //    return NotFound();
+            //}
+
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _context.Update(account);
+            //        await _context.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!AccountExists(account.Id))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return RedirectToAction(nameof(Index));
+            //}
             ViewData["Catid"] = new SelectList(_context.typeAccount, "Id", "Id", account.Catid);
             return View(account);
         }
