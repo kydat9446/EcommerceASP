@@ -103,7 +103,7 @@
         <div class="col-md-4 single-right-left ">
             <div class="grid images_3_of_2">
                 <div class="mySlides">
-                    <img src="~/images/d2.jpg" data-imagezoom="true" class="img-responsive">
+                    <img src="~/images/product/@ViewBag.Product[0].Image" data-imagezoom="true" class="img-responsive">
                 </div>
 
                 <div class="mySlides">
@@ -120,7 +120,7 @@
                 <!-- Thumbnail images -->
                 <div class="row">
                     <div class="column">
-                        <img class="demo cursor" src="~/images/d2.jpg" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
+                        <img class="demo cursor" src="~/images/product/@ViewBag.Product[0].Image" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
                     </div>
                     <div class="column">
                         <img class="demo cursor" src="~/images/d1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
@@ -133,8 +133,8 @@
             </div>
         </div>
         <div class="col-md-8 single-right-left simpleCart_shelfItem">
-            <h3>Big Wing Sneakers  (Navy)</h3>
-            <p><span class="item_price">$650</span> <del>- $900</del></p>
+            <h3>@ViewBag.Product[0].Name</h3>
+            <p><span class="item_price">@ViewBag.Product[0].Price đ</span> <del>- 350 000đ</del></p>
             <div class="rating1">
                 <span class="starRating">
                     <input id="rating5" type="radio" name="rating" value="5">
@@ -242,9 +242,7 @@
                     <div class="tab1">
 
                         <div class="single_page_agile_its_w3ls">
-                            <h6>Lorem ipsum dolor sit amet</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore magna aliqua.</p>
-                            <p class="w3ls_para">Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore magna aliqua.</p>
+                            @ViewBag.Product[0].Description
                         </div>
                     </div>
                     <!--//tab_one-->
