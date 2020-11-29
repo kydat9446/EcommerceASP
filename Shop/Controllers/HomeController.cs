@@ -81,5 +81,17 @@ namespace Shop.Controllers
             ViewBag.NewProducts = productsNew;
             return View();
         }
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Cart()
+        {
+            return View();
+        }
     }
 }
