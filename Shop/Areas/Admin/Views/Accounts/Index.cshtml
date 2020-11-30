@@ -10,12 +10,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<form asp-controller="Account" asp-action="Index" method="get">
+<form asp-controller="Accounts" asp-action="Index" method="get">
     <p>
         <select asp-for="TypeAccount" asp-items="Model.ListAccount">
             <option value="">All</option>
         </select>
-        Title: <input type="text" name="SearchString">
+        Phone : <input type="text" name="SearchString">
         <input type="submit" value="Filter" />
     </p>
 </form>
