@@ -23,20 +23,22 @@ namespace Shop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Accounts
-        public async Task<IActionResult> Index(string listTypeProduct,string searchString)
+       
+        public async Task<IActionResult> Index(string typeAccount,string searchString)
         {
             IQueryable<string> ListTypeAccountQuery = from m in _context.account
                                                     orderby m.TypeA.Name
                                                     select m.TypeA.Name;
             var account = from m in _context.account
                           select m;
+      
             if (!String.IsNullOrEmpty(searchString))
             {
-                account = account.Where(s => s.Name.Contains(searchString));
+                account = account.Where(s => s.Phone.Contains(searchString));
             }
-            if (!string.IsNullOrEmpty(listTypeProduct))
+            if (!string.IsNullOrEmpty(typeAccount))
             {
-                account = account.Where(x => x.Name == listTypeProduct);
+                account = account.Where(x => x.TypeA.Name == typeAccount);
             }
             var listTypeAccountVM = new SearchAccount
             {
