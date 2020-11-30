@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shop.Areas.Admin.Data;
 using Shop.Areas.Admin.Models;
 namespace Shop.Controllers
@@ -93,5 +94,16 @@ namespace Shop.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Search(string search)
+        {
+            var movies = from m in _context.product select m;
+            if (!String.IsNullOrEmpty(search))
+            {
+                movies = movies.Where(s => s.Name.Contains(search));
+
+            }
+            return View(await movies.ToListAsync());
+        }
+
     }
 }
