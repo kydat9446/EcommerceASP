@@ -24,10 +24,28 @@ namespace Shop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string typeProduct, string searchString)
         {
-            var dPContext = _context.product.Include(p => p.TypeP);
-            return View(await dPContext.ToListAsync());
+            IQueryable<string> ListTypeProductQuery = from m in _context.product
+                                                      orderby m.TypeP.Name
+                                                      select m.TypeP.Name;
+            var product = from m in _context.product
+                          select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                product = product.Where(s => s.Name.Contains(searchString));
+            }
+            if (!string.IsNullOrEmpty(typeProduct))
+            {
+                product = product.Where(x => x.TypeP.Name == typeProduct);
+            }
+            var listTypeProductVM = new SearchProduct
+            {
+                ListProduct = new SelectList(await ListTypeProductQuery.Distinct().ToListAsync()),
+                Products = await product.ToListAsync()
+            };
+            var dPContext = _context.product.Include(s => s.TypeP.Id);
+            return View(listTypeProductVM);
         }
 
         // GET: Admin/Products/Details/5
