@@ -47,13 +47,13 @@ namespace Shop
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                endpoints.MapAreaControllerRoute(
                     name: "default",
-                    pattern: "{area:exists}/{controller=Products}/{action=Index}/{id?}");
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Products}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=index}/{id?}");
-                
             });
         }
     }
