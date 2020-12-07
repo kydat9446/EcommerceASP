@@ -9,7 +9,6 @@
     <Folder Include="Areas\API\Models\" />
     <Folder Include="Areas\API\Views\" />
     <Folder Include="Data\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Models\" />
     <Folder Include="wwwroot\images\account\" />
     <Folder Include="wwwroot\images\product\" />

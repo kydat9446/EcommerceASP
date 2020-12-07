@@ -54,6 +54,7 @@ namespace Shop.Controllers
         }
         public IActionResult Men()
         {
+            ViewBag.Products = _context.product;
             return View();
         }
         public IActionResult Women()
