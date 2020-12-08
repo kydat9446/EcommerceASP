@@ -1,0 +1,56 @@
+﻿@model Shop.Areas.Admin.Models.Image
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Image</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdProduct" class="control-label"></label>
+                <select asp-for="IdProduct" class="form-control" asp-items="ViewBag.IdProduct"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="ful" name="ful">
+                    <label class="custom-file-label" for="ful">Choose File</label>
+                </div>
+                <div class="form-group">
+                    <img id="Name" src="~/images/noimage.jpg" alt="no image" class="img-thumbnail">
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    function readURL(input, img) {
+        if (input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#ful").change(function () {
+        readURL(this,'#img');
+    })
+    </script>
+}

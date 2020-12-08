@@ -18,5 +18,6 @@ namespace Shop.Areas.Admin.Data
         public DbSet<TypeProduct> typeProduct { get; set; }
         public DbSet<Account> account { get; set; }
         public DbSet<TypeAccount> typeAccount { get; set; }
+        public DbSet<Shop.Areas.Admin.Models.Image> Image { get; set; }
     }
 }
