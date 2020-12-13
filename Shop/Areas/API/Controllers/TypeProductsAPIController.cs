@@ -7,23 +7,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Areas.Admin.Data;
 using Shop.Areas.Admin.Models;
-
+using Newtonsoft.Json;
 namespace Shop.Areas.API.Controllers
 {
-    [Route("api/[controller]")]
+    
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    public class TypeProductsController : ControllerBase
+    public class TypeProductsAPIController : ControllerBase
     {
         private readonly DPContext _context;
 
-        public TypeProductsController(DPContext context)
+        public TypeProductsAPIController(DPContext context)
         {
             _context = context;
         }
 
+        [HttpGet]
+
+        public string getCategory(int id)
+        {
+            var categoryModel = _context.typeProduct.FirstOrDefault(item => item.Id == id);
+            return JsonConvert.SerializeObject(categoryModel);
+        }
+
         // GET: api/TypeProducts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TypeProduct>>> GettypeProduct()
+        public async Task<ActionResult<IEnumerable<TypeProduct>>> GettypeProducts()
         {
             return await _context.typeProduct.ToListAsync();
         }

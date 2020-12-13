@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -206,5 +207,9 @@ namespace Shop.Areas.Admin.Controllers
         {
             return _context.product.Any(e => e.Id == id);
         }
+        
+
+
+
     }
 }

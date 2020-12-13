@@ -27,6 +27,10 @@ namespace Shop
             services.AddControllersWithViews();
             services.AddDbContext<DPContext>(options =>
            options.UseSqlServer(Configuration.GetConnectionString("DPContext")));
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,18 +46,19 @@ namespace Shop
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                endpoints.MapAreaControllerRoute(
                     name: "default",
-                    pattern: "{area:exists}/{controller=Products}/{action=Index}/{id?}");
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Products}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=index}/{id?}");
-                
             });
         }
     }

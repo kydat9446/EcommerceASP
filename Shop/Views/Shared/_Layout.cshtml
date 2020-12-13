@@ -1,13 +1,19 @@
-﻿<!DOCTYPE html>
+﻿
 
+<!DOCTYPE html>
 <html>
 <head>
     @*<meta name="viewport" content="width=device-width" />
         <title>@ViewBag.Title</title>*@
     @await Html.PartialAsync("_HeadPartial.cshtml")
     @RenderSection("css", required: false)
+
 </head>
 <body>
+
+    
+
+
     @await Html.PartialAsync("_HeaderPartial.cshtml")
     <div>
         @RenderBody()
