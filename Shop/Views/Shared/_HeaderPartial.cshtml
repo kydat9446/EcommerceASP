@@ -3,8 +3,30 @@
 *@
 @{
 }
+@using Shop.Areas.Admin.Models;
+@{
+    var data = Context.Session.GetString("cart");
+
+    int coutCart = 0;
+    if (data == null)
+    {
+        coutCart = 0;
+    }
+    else
+    {
+        var data2 = Context.Session.GetString("cart");
+        List<Cart> dataCart = JsonConvert.DeserializeObject<List<Cart>>(data2);
+        foreach (var item in dataCart)
+        {
+            coutCart += item.Quantity;
+        }
+
+    }
+
+}
+
 <!-- header -->
-<div class="header" >
+<div class="header">
     <div class="container">
         <ul>
             <li> <a asp-controller="Home" asp-action="Register"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Register </a></li>
@@ -73,22 +95,22 @@
                                         </div>
                                         <div class="col-sm-3 multi-gd-img">
                                             <ul class="multi-column-dropdown">
-                                                <li><a asp-controller="Home" asp-action="Men">Jewellery</a></li>                                                
-                                                    <li><a asp-controller="Home" asp-action="Men">Sunglasses</a></li>
-                                                    <li><a asp-controller="Home" asp-action="Men">Perfumes</a></li>
-                                                    <li><a asp-controller="Home" asp-action="Men">Beauty</a></li>
-                                                    <li><a asp-controller="Home" asp-action="Men">Shirts</a></li>
-                                                    <li><a asp-controller="Home" asp-action="Men">Sunglasses</a></li>
-                                                    <li><a asp-controller="Home" asp-action="Men">Swimwear</a></li>
+                                                <li><a asp-controller="Home" asp-action="Men">Jewellery</a></li>
+                                                <li><a asp-controller="Home" asp-action="Men">Sunglasses</a></li>
+                                                <li><a asp-controller="Home" asp-action="Men">Perfumes</a></li>
+                                                <li><a asp-controller="Home" asp-action="Men">Beauty</a></li>
+                                                <li><a asp-controller="Home" asp-action="Men">Shirts</a></li>
+                                                <li><a asp-controller="Home" asp-action="Men">Sunglasses</a></li>
+                                                <li><a asp-controller="Home" asp-action="Men">Swimwear</a></li>
                                             </ul>
                                         </div>
-                         
+
                                         <div class="clearfix"></div>
                                     </div>
                                 </ul>
                             </li>
 
-                            
+
                             <li class=" menu__item"><a class="menu__link" asp-controller="Home" asp-action="Contact">Contact</a></li>
                         </ul>
                     </div>
@@ -98,9 +120,17 @@
         <div class="top_nav_right">
             <div class="wthreecartaits wthreecartaits2 cart cart box_1">
                 <form action="#" method="post" class="last">
-                    
+
                     <input type="hidden" name="display" value="1">
-                    <button asp-controller="Home" asp-action="Cart"><i class="fa fa-cart-arrow-down nav-link" aria-hidden="true"></i></button>
+                    <a 
+                       asp-controller="Home"
+                       asp-action="ListCart"
+                       style="background:#2fdab8;padding:10px;">
+                        <i class="fa fa-cart-arrow-down nav-link" aria-hidden="true"></i>
+                        @coutCart
+                    </a>
+                    @* <button asp-controller="Home" asp-action="Cart">
+        </button>*@
                 </form>
 
             </div>

@@ -317,7 +317,7 @@
         </div>
         <div class="clearfix"></div>
 
-        <div class="single-pro">
+        <div class="single-pro ">
             @foreach (var item in ViewBag.Products)
             {
                 <div class="col-md-3 product-men">
@@ -339,22 +339,23 @@
                                 <span class="item_price">@item.Price</span>
                                 <del>350 000</del>
                             </div>
+                            <a  asp-controller="Home" asp-action="addCart" asp-route-id="@item.Id" class=" addProduct hvr-outline-out btn snipcart-details single-item">Add order</a>
                             @*<div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
-                            <form action="#" method="post">
-                                <fieldset>
-                                    <input type="hidden" name="cmd" value="_cart" />
-                                    <input type="hidden" name="add" value="1" />
-                                    <input type="hidden" name="business" value=" " />
-                                    <input type="hidden" name="item_name" value="Formal Blue Shirt" />
-                                    <input type="hidden" name="amount" value="30.99" />
-                                    <input type="hidden" name="discount_amount" value="1.00" />
-                                    <input type="hidden" name="currency_code" value="USD" />
-                                    <input type="hidden" name="return" value=" " />
-                                    <input type="hidden" name="cancel_return" value=" " />
-                                    <input type="submit" name="submit" value="Add to cart" class="button" />
-                                </fieldset>
-                            </form>
-                        </div>*@
+            <form action="#" method="post">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="add" value="1" />
+                    <input type="hidden" name="business" value=" " />
+                    <input type="hidden" name="item_name" value="Formal Blue Shirt" />
+                    <input type="hidden" name="amount" value="30.99" />
+                    <input type="hidden" name="discount_amount" value="1.00" />
+                    <input type="hidden" name="currency_code" value="USD" />
+                    <input type="hidden" name="return" value=" " />
+                    <input type="hidden" name="cancel_return" value=" " />
+                    <input type="submit" name="submit" value="Add to cart" class="button" />
+                </fieldset>
+            </form>
+        </div>*@
 
                         </div>
                     </div>

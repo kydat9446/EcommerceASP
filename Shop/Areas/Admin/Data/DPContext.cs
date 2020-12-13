@@ -21,5 +21,10 @@ namespace Shop.Areas.Admin.Data
         public DbSet<Size> size { get; set; }
         public DbSet<Bill> bill { get; set; }
         public DbSet<BillDetail> DetailBill { get; set; }
+
+        internal object Find(int idProduct)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
