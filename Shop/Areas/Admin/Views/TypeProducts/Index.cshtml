@@ -6,12 +6,12 @@
 }
 
 <h2>Index</h2>
-<!-- Modal -->
+<!-- Modal Edit -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Sửa danh mục</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -19,25 +19,50 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="category-name" class="col-form-label">Name</label>
-                        <input type="text" class="form-control" id="category-name">
+                        <label for="recipient-name" class="col-form-label">Tên danh mục:</label>
+                        <input type="text" class="form-control" id="typeProductName">
                     </div>
-
-                    <div class="form-group" hidden="hidden">
-                        <input type="text" class="form-control" id="category-id">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="typeProductID">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" name="btn-putEdit" class="btn btn-primary">Sửa</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal Create -->
+<div class="modal fade" id="exampleModal-create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tọa danh mục mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tên danh mục:</label>
+                        <input type="text" class="form-control" id="typeProductNameCreate">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" name="btn-create">Tạo mới</button>
+            </div>
+        </div>
+    </div>
+</div>
 <p>
     <a asp-action="Create">Create New</a>
+    <button data-toggle="modal" data-target="#exampleModal-create" class="bntEditCategory btn btn-primary" type="button">Tạo API</button>
 </p>
 <table class="table">
     <thead>
@@ -62,7 +87,8 @@
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
                 <td>
-                    <button data-toggle="modal" data-target="#exampleModal" class="bntEditCategory" type="button" name="btn-sua" value="@item.Id">Sua</button>
+                    <button data-toggle="modal" data-target="#exampleModal" class="bntEditCategory btn btn-primary" type="button" name="btn-edit" value="@item.Id">Sửa</button>
+                    <button class="bntEditCategory btn btn-primary" value="@item.Id" type="button" name="btn-delete">Xóa</button>
                 </td>
             </tr>
         }
@@ -71,7 +97,7 @@
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        let url = 'api/TypeProductsAPI/getCategory?id=%id%';
+        //let url = '../api/TypeProductsAPI/GettypeProducts'
         //$('button[name=btn-edit]').click(function () {
         //    fetch(url)
         //        .then(function (response) {
@@ -90,14 +116,40 @@
         //        });
         //})
 
+        let url = '../api/TypeProductsAPI/GetTypeProduct/';
         $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
-            var clickedButton = $(event.target);
-            var modal = $(this);
+            var modal = $(this)
+            let typeProductId = button[0].value;
+            fetch(url + typeProductId, { method: 'GET' })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    // Read the response as json.
+                    return response.json();
+                })
+                .then(function (responseAsJson) {
+                    console.log(responseAsJson);
+                    modal.find('#typeProductName').val(responseAsJson.name);
+                    modal.find('#typeProductID').val(responseAsJson.id);
+                })
+                .catch(function (error) {
+                    console.log('Looks like there was a problem: \n', error);
+                });
+        })
 
-            let idCategory = button[0].value;
-
-            fetch(url.replace("%id%", idCategory), { method: 'GET' })
+        let urlEdit = '../api/TypeProductsAPI/PutTypeProduct/';
+        $('button[name=btn-putEdit]').click(function () {
+            let categoryId = document.querySelector('#typeProductID').value;
+            let categoryName = document.querySelector('#typeProductName').value;
+            fetch(urlEdit + categoryId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Id: categoryId, Name: categoryName })
+            })
                 .then(function (response) {
                     if (!response.ok) {
                         throw Error(response.statusText);
@@ -106,8 +158,52 @@
                 })
                 .then(function (responseAsJson) {
                     console.log(responseAsJson);
-                    modal.find('#category-id').val(responseAsJson.Id);
-                    modal.find('#category-name').val(responseAsJson.TenLoai);
+                    
+                })
+                .catch(function (error) {
+                    console.log('Looks like there was a problem: \n', error);
+                });
+        });
+
+        let urlCreate = '../api/TypeProductsAPI/PostTypeProduct';
+        $('button[name=btn-create]').click(function () {
+            let name = document.querySelector('#typeProductNameCreate').value;
+            fetch(urlCreate, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Id: 0, Name: name })
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(function (responseAsJson) {
+                    console.log(responseAsJson);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log('Looks like there was a problem: \n', error);
+                });
+        });
+
+        let urlDelete = '../api/TypeProductsAPI/DeleteTypeProduct/';
+        $('button[name=btn-delete]').click(function () {
+            let name = document.querySelector('#typeProductNameCreate').value;
+            let categoryId = this.value;
+            fetch(urlDelete + categoryId, { method: 'delete' })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(function (responseAsJson) {
+                    console.log(responseAsJson);
+                    location.reload();
                 })
                 .catch(function (error) {
                     console.log('Looks like there was a problem: \n', error);

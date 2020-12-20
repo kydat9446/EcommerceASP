@@ -24,11 +24,6 @@ namespace Shop.Areas.API.Controllers
 
         [HttpGet]
 
-        public string getCategory(int id)
-        {
-            var categoryModel = _context.typeProduct.FirstOrDefault(item => item.Id == id);
-            return JsonConvert.SerializeObject(categoryModel);
-        }
 
         // GET: api/TypeProducts
         [HttpGet]
